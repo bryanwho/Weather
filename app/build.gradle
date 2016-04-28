@@ -26,4 +26,13 @@ dependencies {
 
     //Retrofit Library
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
+
+    //GSON Library
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
+
+    //Used for generated Annotations
+    compile 'org.glassfish.main:javax.annotation:4.0-b33'
+
+    //Used for logging responses of Retrofits HttpClient
+    compile 'com.squareup.okhttp:logging-interceptor:2.6.0'
 }
