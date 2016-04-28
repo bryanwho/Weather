@@ -3,6 +3,7 @@ package com.codetank.weather;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.codetank.weather.data.CurrentWeather;
@@ -23,8 +24,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String API_KEY = "2cf0967f5d444acf71bf234374c3885c";
 
 
-    TextView temp;
-    TextView locale;
+    private TextView temp;
+    private TextView locale;
+    private RelativeLayout layout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         temp = (TextView) findViewById(R.id.temp);
         locale = (TextView) findViewById(R.id.locale);
+        layout = (RelativeLayout) findViewById(R.id.background);
     }
 
 
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         OpenWeatherMapService openWeatherMapService = retrofit.create(OpenWeatherMapService.class);
 
-        Call<CurrentWeather> currentWeatherCall = openWeatherMapService.currentWeatherByZip("11003,us","imperial", API_KEY);
+        Call<CurrentWeather> currentWeatherCall = openWeatherMapService.currentWeatherByZip("11432,us","imperial", API_KEY);
 
         currentWeatherCall.enqueue(new Callback<CurrentWeather>() {
             @Override
@@ -81,8 +85,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateCurrentWeather(CurrentWeather currentWeather) {
-        temp.setText(Float.toString(currentWeather.getMain().getTemp()));
+        temp.setText(Integer.toString((int)currentWeather.getMain().getTemp()) + "\u2109");
         locale.setText(currentWeather.getName());
+
+        if(currentWeather.getMain().getTemp() < 70){
+            layout.setBackgroundResource(R.drawable.sky);
+        }
     }
 
 }
