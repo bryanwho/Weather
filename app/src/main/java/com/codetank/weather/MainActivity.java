@@ -3,6 +3,7 @@ package com.codetank.weather;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.codetank.weather.data.CurrentWeather;
 
@@ -22,10 +23,16 @@ public class MainActivity extends AppCompatActivity {
     public static final String API_KEY = "2cf0967f5d444acf71bf234374c3885c";
 
 
+    TextView temp;
+    TextView locale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        temp = (TextView) findViewById(R.id.temp);
+        locale = (TextView) findViewById(R.id.locale);
     }
 
 
@@ -54,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         OpenWeatherMapService openWeatherMapService = retrofit.create(OpenWeatherMapService.class);
 
-        Call<CurrentWeather> currentWeatherCall = openWeatherMapService.currentWeatherByZip("11003,us", API_KEY);
+        Call<CurrentWeather> currentWeatherCall = openWeatherMapService.currentWeatherByZip("11003,us","imperial", API_KEY);
 
         currentWeatherCall.enqueue(new Callback<CurrentWeather>() {
             @Override
@@ -62,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("flow", "success: " + response.body().getName());
                 Log.d("flow", "success: " + response.body().getBase());
                 Log.d("flow", "success: " + response.body().getId());
+
+                populateCurrentWeather(response.body());
             }
 
             @Override
@@ -69,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("flow", "failure");
             }
         });
+    }
+
+    private void populateCurrentWeather(CurrentWeather currentWeather) {
+        temp.setText(Float.toString(currentWeather.getMain().getTemp()));
+        locale.setText(currentWeather.getName());
     }
 
 }

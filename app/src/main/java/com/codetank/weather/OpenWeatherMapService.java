@@ -15,6 +15,7 @@ public interface OpenWeatherMapService {
 
     @GET("data/2.5/weather?")
     Call<CurrentWeather> currentWeatherByZip(@Query("zip") String zipCode,
+                                             @Query("units") String unit,
                                              @Query("apikey") String apiKey);
 
 //    @GET("weather?&zip=10001&apikey=2cf0967f5d444acf71bf234374c3885c")
