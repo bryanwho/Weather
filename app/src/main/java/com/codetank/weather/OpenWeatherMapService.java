@@ -1,6 +1,7 @@
 package com.codetank.weather;
 
 import com.codetank.weather.data.CurrentWeather;
+import com.codetank.weather.data.FiveDayForecast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,6 +19,8 @@ public interface OpenWeatherMapService {
                                              @Query("units") String unit,
                                              @Query("apikey") String apiKey);
 
-//    @GET("weather?&zip=10001&apikey=2cf0967f5d444acf71bf234374c3885c")
-//    Call<CurrentWeather> currentWeatherByZip1();
+    @GET("data/2.5/forecast?")
+    Call<FiveDayForecast> fiveDayForecast(@Query("q") String city,
+                                          @Query("units") String unit,
+                                          @Query("apikey") String apiKey);
 }

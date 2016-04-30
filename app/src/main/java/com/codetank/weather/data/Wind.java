@@ -9,7 +9,7 @@ import javax.annotation.Generated;
 public class Wind {
 
     private float speed;
-    private int deg;
+    private double deg;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
@@ -52,7 +52,7 @@ public class Wind {
      * @return
      *     The deg
      */
-    public int getDeg() {
+    public double getDeg() {
         return deg;
     }
 
